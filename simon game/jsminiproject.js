@@ -10,16 +10,17 @@ let btns =["yellow","red","purple","green"];
 document.addEventListener("keypress",()=>{  
     if(started==false)
         {
-           //Omitted code here
-           //Write your code here
+         // My Code
+         started = true;
+         levelUp();
         }
 })
 
 function gameFlash(btn){
     btn.classList.add("flash");
     setTimeout(function(){
-        //Omitted code here
-           //Write your code here
+        // My Code
+        btn.classList.remove("flash");
     },400);
 }
 
@@ -27,22 +28,23 @@ function gameFlash(btn){
 function userFlash(btn){
     btn.classList.add("userflash");
     setTimeout(function(){
-       //Omitted code here
-           //Write your code here
+       // My Code
+       btn.classList.remove("userflash");
     },300);
 }
 
 function levelUp(){
-   //Omitted code here
-           //Write your code here
+    // My Code
+    level++;
+    userseq = [];
     h3.innerText=`Level = ${level}`;
     // random button choose
     let randInx= Math.floor(Math.random()*4);
     let randColor=btns[randInx];
     let randbtn =document.querySelector(`.${randColor}`);
-  
-   //Omitted code here
-  //Write your code here
+    //My Code
+    gameFlash(randbtn);
+    gameseq.push(randbtn);
 }
 
 
@@ -56,10 +58,15 @@ function checkAns(idx){
     {
         if(userseq.length===gameseq.length)
             {
-               //Omitted code here
-           //Write your code here
+            //My Code
+            console.log("correct");
+            h2.innerHTML = "LEVEL UP!!"
+            setTimeout(function(){
+                h2.innerHTML = "Simon Game"
+                levelUp();
+            },1000);
+
             }
-        console.log("correct");
     }
     else
     {
@@ -80,20 +87,28 @@ function btnPress()
     userFlash(this);
     let userColor = this.classList[1];
     // console.log(userColor);
-   
+
     console.log(gameseq);
-    //Omitted code here
-           //Write your code here
+    // My Code
+    userseq.push(btn);  
+    userFlash(btn);
+    checkAns(userseq.length - 1);   
+
 }
+
 let allBtns= document.querySelectorAll('.btn');
+
 for(let btn of allBtns)
 {
-    //Omitted code here
-           //Write your code here
+    // My Code
+    btn.addEventListener('click',btnPress);
+
 }
 
 function reset()
 {
-    //Omitted code here
-           //Write your code here
+    started=false;
+    gameseq=[];
+    userseq=[];
+    level=0;
 }
