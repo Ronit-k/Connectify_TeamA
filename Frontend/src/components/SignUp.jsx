@@ -1,101 +1,91 @@
-import React from "react";
-import "./Login_Signup.css";
-import { useState } from "react";
-import eyeClose from "../assets/eye-close.svg";
-import eyeOpen from "../assets/eye-open.svg";
+import React from 'react'
+import styles from './Signup.module.css';
+import { useState } from 'react'
+import eyeClose from '../assets/eye-close.svg'
+import eyeOpen from '../assets/eye-open.svg'
 import { Link } from "react-router-dom";
+import { ChakraProvider } from '@chakra-ui/react';
+import login_signup_theme from './login_signup_theme';
 
-const SignUp = () => {
+
+
+const Signup = () => {
   const [eye, setEye] = useState(eyeClose);
   const [type, setType] = useState("password");
+  const [passwd, setPasswd] = useState("");
+  const [confPasswd, setConfPasswd] = useState("");
 
   function eyeClicked() {
-    if (type === "password") {
+    if (type === "password"){
       setEye(eyeOpen);
       setType("text");
-    } else {
+    }
+    else{
       setEye(eyeClose);
       setType("password");
     }
-  }
+  };
+
+  const check = (passwd,confPasswd) => {
+    if (confPasswd !== ''){ 
+      if ( passwd === confPasswd){
+        document.getElementById("confPasswd").style.borderColor="green";
+      }
+      else{
+        document.getElementById("confPasswd").style.borderColor="#e8f530";
+      }
+    };
+  };
 
   return (
-    <>
-      <div className="outer-container">
-        <div className="left-text">Add text and features here</div>
-        <div className="form-container">
-          <form className="form">
-            <div className="header">Sign Up</div>
-            <div className="field_name flex flex-row gap-2">
-              <div className="flex flex-col">
-                <span>First Name</span>
-                <input
-                  type="username"
-                  placeholder="First Name"
-                  size="40"
-                  required
-                />
-              </div>
-              <div className="flex flex-col">
-                <span>Last Name</span>
-                <input
-                  type="username"
-                  placeholder="Last Name"
-                  size="40"
-                  required
-                />
-              </div>
-            </div>
-            <div className="field">
-              <span>Email</span>
-              <input type="email" placeholder="Email" size="40" required />
-            </div>
-            <div className="field">
-              <span>Password</span>
-              <input type={type} placeholder="Password" size="60" required />
-              <img
-                src={eye}
-                alt=""
-                width="50px"
-                height="50px"
-                id="password-eye"
-                onClick={(event) => eyeClicked()}
-              />
-            </div>
-            <div className="field">
-              <span>Confirm Password</span>
-              <input
-                type={type}
-                placeholder="Confirm Password"
-                size="60"
-                required
-              />
-              <img
-                src={eye}
-                alt=""
-                width="50px"
-                height="50px"
-                id="password-eye"
-                onClick={(event) => eyeClicked()}
-              />
-            </div>
-            <div className="div-forgot-password">
-              <a href="#">Forgot password?</a>
-            </div>
-            <div className="div-btn-login">
-              <Link to="/home">
-                <button className="btn-login">Sign Up</button>
-              </Link>
-              <p>Already have an Account?</p>
-              <Link className="sign-up-link" to="/">
+    <ChakraProvider theme={login_signup_theme}>
+    <div className={styles.outerContainer}>
+      <div className={styles.leftText}>
+        Add text and features here
+      </div>
+      <div className={styles.formContainer}>
+        <form className={styles.form}>
+          <div className={styles.header}>
+            Signup
+          </div>
+          <div className={styles.field} id={styles.inputFname}>
+            <span id={styles.span1} >First Name</span>
+            <span id={styles.span2}>Last Name</span>
+            <input type="text" placeholder='First name' size='26' required />
+          </div>
+          <div className={styles.field} id={styles.inputLname}>
+            <input type="text" placeholder='Last name' size='26' required />
+          </div>
+          <div className={styles.field}>
+            <span>Email</span>
+            <input type="email" placeholder='Email' size='40' required/>
+          </div>
+          <div className={styles.field}>
+            <span>Password</span>
+            <input type={type} placeholder="Password" onChange={(event)=>setPasswd(event.target.value)} size='60' required/>
+            <img src={eye} alt='' width="50px" height="50px" id={styles.passwordEye} onClick={(event)=> eyeClicked()}/>
+          </div>
+          <div className={styles.field}>
+            <span>Confirm Password</span>
+            <input id="confPasswd" type="password" placeholder='Confirm password' onChange={(event)=>setConfPasswd(event.target.value)} size='40' required/>
+          </div>
+          {check(passwd,confPasswd)}
+          <div className={styles.divBtnSignup}>
+            <Link to="/home">
+              <button className={styles.btnSignup}>Sign up</button>
+            </Link>
+            <p>Already have an Account?</p>
+            <Link className={styles.signUpLink} to="/">
                 Login
               </Link>
-            </div>
-          </form>
-        </div>
+          </div>
+        </form>
       </div>
-    </>
+    </div>
+    </ChakraProvider>
   );
 };
 
-export default SignUp;
+export default Signup
+
+       
